@@ -59,6 +59,17 @@ public class FlopkartListingDealServices
 		return deals;
 	}
 
+
+	@GET
+	@Path("/combo/{id}")
+	@Produces("application/json")
+	public List<FlopkartListingDeal> getFlopkartListingDealsByComboId(@PathParam("id") String comboid)
+	{
+		FlopkartListingDealDAO dao = new FlopkartListingDealDAO();
+		List<FlopkartListingDeal> deals = dao.getFlopkartListingDealsByComboId(comboid);
+		return deals;
+	}
+
 	@GET
 	@Path("/deal/{id}")
 	@Produces("application/json")

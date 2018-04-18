@@ -42,6 +42,18 @@
 	          		<input type="number" id="buy3get1-days" hidden="hidden"/>
 	          	</div>
 	          	<div class="row">
+	          		<div class="col-sm-6 sidebar"> 
+		              <h4 class="widget-title"><B>COMBO ID<label style="color:red; padding-left:3px;">  *</label></B></h4>
+		              <input type="text" class="form-control" id="buy3get1-comboid" required>
+		            </div>
+	          	</div>
+	          	<div class="row">
+	          		<div class="col-sm-6 sidebar"> 
+		              <h4 class="widget-title"><B>COMBO DESCRIPTION<label style="color:red; padding-left:3px;">  *</label></B></h4>
+		              <textarea class="form-control" rows="5" cols="10" id="buy3get1-combodesc" required></textarea>
+		            </div>
+	          	</div>
+	          	<div class="row">
 		          	<div class="col-sm-6 sidebar"> 
 		              <h4 class="widget-title"><B>LISTING<label style="color:red; padding-left:3px;">  *</label></B></h4>
 		              <div id="selectlisting-1"></div>
@@ -73,6 +85,18 @@
 	          		<input type="number" id="buy2get1-days" hidden="hidden"/>
 	          	</div>
 	          	<div class="row">
+	          		<div class="col-sm-6 sidebar"> 
+		              <h4 class="widget-title"><B>COMBO ID<label style="color:red; padding-left:3px;">  *</label></B></h4>
+		              <input type="text" class="form-control" id="buy2get1-comboid" required>
+		            </div>
+	          	</div>
+	          	<div class="row">
+	          		<div class="col-sm-6 sidebar"> 
+		              <h4 class="widget-title"><B>COMBO DESCRIPTION<label style="color:red; padding-left:3px;">  *</label></B></h4>
+		              <textarea class="form-control" rows="5" cols="10" id="buy2get1-combodesc" required></textarea>
+		            </div>
+	          	</div>
+	          	<div class="row">
 		          	<div class="col-sm-6 sidebar"> 
 		              <h4 class="widget-title"><B>LISTING<label style="color:red; padding-left:3px;">  *</label></B></h4>
 		              <div id="selectlisting-5"></div>
@@ -96,6 +120,18 @@
 	          <div class="row">
 	          		<div id="buy1get1-dealDesc" class="alert alert-warning" style="width: 550px;"></div>
 	          		<input type="number" id="buy1get1-days" hidden="hidden"/>
+	          	</div>
+	          	<div class="row">
+	          		<div class="col-sm-6 sidebar"> 
+		              <h4 class="widget-title"><B>COMBO ID<label style="color:red; padding-left:3px;">  *</label></B></h4>
+		              <input type="text" class="form-control" id="buy1get1-comboid" required>
+		            </div>
+	          	</div>
+	          	<div class="row">
+	          		<div class="col-sm-6 sidebar"> 
+		              <h4 class="widget-title"><B>COMBO DESCRIPTION<label style="color:red; padding-left:3px;">  *</label></B></h4>
+		              <textarea class="form-control" rows="5" cols="10" id="buy1get1-combodesc" required></textarea>
+		            </div>
 	          	</div>
 	          	<div class="row">
 		          	<div class="col-sm-6 sidebar"> 
@@ -266,7 +302,7 @@ function fetchListings(num){
 			var data="<select id='list"+num+"' style='background-color:white; font-size:20px;' required>"+
 				"<option value=' "+0+" '>Select a listing</option>";
             for(var i in listings){
-               data+="<option value='"+listings[i].id+"'>"+listings[i].listingName+"</option>";
+               data+="<option value='"+listings[i].id+"'>"+listings[i].listingName+" ( ID: "+listings[i].itemId+") "+"</option>";
             }
             data += "</select>"
             document.getElementById("selectlisting-"+num).innerHTML = data;
@@ -286,7 +322,9 @@ function addListDeal(ldJSON){
 		data : ldJSON,
 		dataType : "json", // data type of response
 		success : function(){
-			//alert("success");
+			swal("Deals have been added to the listings successfully!", {
+			      icon: "success",
+			});
     	},
     	error:function(err) {
         	//alert(JSON.stringify(err));
@@ -297,18 +335,33 @@ function addListDeal(ldJSON){
 
 $("#submitListingDeal").click(function() 
 {
+	var result = getCookie("seller_details");
+	 var sellerid;
+	 if (result != "") 
+	 {	
+	    var seller = JSON.parse(result);
+	    sellerid = seller.id;
+	 }
 	var selected = document.getElementById("deal");
 	var selectedDeal = selected.options[selected.selectedIndex].text.replace(/\s/g,'').toLowerCase();
 	var dealid = document.getElementById("deal").value;
+	var comboid;
+	var combodesc;
 	var days;
 	if(selectedDeal==="buy3get1"){
 		days = document.getElementById("buy3get1-days").value;
+		comboid = document.getElementById("buy3get1-comboid").value;
+		combodesc = document.getElementById("buy3get1-combodesc").value;
 	}
 	else if(selectedDeal==="buy2get1"){
 		days = document.getElementById("buy2get1-days").value;
+		comboid = document.getElementById("buy2get1-comboid").value;
+		combodesc = document.getElementById("buy2get1-combodesc").value;
    	}
    	else if(selectedDeal==="buy1get1"){	
    		days = document.getElementById("buy1get1-days").value;
+		comboid = document.getElementById("buy1get1-comboid").value;
+		combodesc = document.getElementById("buy1get1-combodesc").value;
    	}
    	else if(selectedDeal==="50%off"){
    		days = document.getElementById("50off-days").value;
@@ -327,6 +380,8 @@ $("#submitListingDeal").click(function()
 			var listingDealJSON = JSON.stringify({
 			    "dealid" : dealid,
 			    "listingid" : listingid,
+			    "comboid" : sellerid+dealid+comboid,
+			    "comboDesc" : combodesc,
 			    "startdate" : stDate,
 			    "enddate" : enDate
 			});
@@ -340,19 +395,23 @@ $("#submitListingDeal").click(function()
 			var listingDealJSON = JSON.stringify({
 			    "dealid" : dealid,
 			    "listingid" : listingid,
+			    "comboid" : sellerid+dealid+comboid,
+			    "comboDesc" : combodesc,
 			    "startdate" : stDate,
 			    "enddate" : enDate
 			});
-			alert(listingDealJSON);
+			//alert(listingDealJSON);
 			addListDeal(listingDealJSON);
 		}
 	}
-	else if(selectedDeal==="b1g1"){
+	else if(selectedDeal==="buy1get1"){
 		for(var num=8; num<10; num++){
 			var listingid = document.getElementById("list"+num).value;
 			var listingDealJSON = JSON.stringify({
 			    "dealid" : dealid,
 			    "listingid" : listingid,
+			    "comboid" : sellerid+dealid+comboid,
+			    "comboDesc" : combodesc,
 			    "startdate" : stDate,
 			    "enddate" : enDate
 			});
@@ -390,9 +449,6 @@ $("#submitListingDeal").click(function()
 			data : JSON.stringify({ "discount": 50 }),
 			success : function()
 			{
-				swal("Deals have been added to the listings successfully!", {
-				      icon: "success",
-				});
 				window.location.reload(true);
 			},
 			error : function()

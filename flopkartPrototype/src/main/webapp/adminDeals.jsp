@@ -41,12 +41,12 @@
 					       <div class="container">
 							<form>
 								<input class="form-control" type="text" id="dealName"
-					placeholder="Enter deal name">
+									placeholder="Enter deal name" required>
 								<br/>
-								<textarea id="description" rows="7" cols="92" placeholder="Enter short description of the deal"></textarea>
+								<textarea id="description" rows="7" cols="92" placeholder="Enter short description of the deal" required></textarea>
 								<br/><br/>
 								<input class="form-control" type="number" id="days"
-									placeholder="Enter duration of deal (in days)"> 
+									placeholder="Enter duration of deal (in days)" required> 
 								<br/>
 								<input type="submit" class="btn btn-primary"
 									onclick="insertDealCategory();" />
@@ -161,8 +161,19 @@ function formToJSON()
 }
 
 function render(){
-	swal("Succesful entry into the database");
-	window.location.reload(true);
+	swal({
+		  title: "Success",
+		  text: "Successful entry into the database!",
+		  icon: "success"
+		})
+		.then((redirect) => {
+		  if (redirect) {
+			  window.location.reload(true);
+		  }
+		  else {
+			  window.location.reload(true);
+		  }
+	});
 }
 
 function insertDealCategory()

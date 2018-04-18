@@ -3,6 +3,7 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
+<meta name="google-signin-client_id" content="335400157874-t9f27csuniaknsm8knns56h6bsu8l5uo.apps.googleusercontent.com">
 
 <%
 response.setHeader("Cache-Control","no-cache"); //HTTP 1.1

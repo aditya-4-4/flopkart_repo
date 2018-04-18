@@ -185,6 +185,7 @@ function checkCookie()
 			"</div>"+
 			"<div class='col-sm-8' style ='font-size:15px; text-align:left; padding:20px;' >"+
 			"<h2 style='padding-bottom:20px;'>Ordered Item No: "+i+"</h2>"+
+			"<div style = 'padding-bottom:10px;font-size:15px;'>Item ID :  <b>"+order_json.itemId+"</b></div>"+
 	        "<div style = 'padding-bottom:10px;font-size:15px;'>Order ID :  <b>"+order_json.orderId+"</b></div>"+
 	        "<div style = 'padding-bottom:10px;font-size:15px;'>Shipping Address : <b> "+order_json.shippingAddress+"</b></div>"+
 	        "<div style = 'padding-bottom:10px;font-size:15px;'>Total Amount : <b> "+order_json.totalAmount+"</b></div>"+

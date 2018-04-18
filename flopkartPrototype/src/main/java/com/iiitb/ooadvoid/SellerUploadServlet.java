@@ -51,8 +51,8 @@ public class SellerUploadServlet extends HttpServlet
 	String pic_url = "";
 	Integer sellerid= 0;
 	String selleremail="";
-	String catname1="";
-	String subcatname1="";
+	Integer catid=0;
+	Integer subcatid=0;
 	Integer cnt= 0;
 	Integer x = 1;
 	Integer y = 1;
@@ -81,8 +81,6 @@ public class SellerUploadServlet extends HttpServlet
 						listingName = (String) item.getString();
 						System.out.println("listing name "+listingName);
 					}
-					
-
 					else if (name.equals("subcatId"))
 					{
 						sub_cat_content =  Integer.parseInt(item.getString());
@@ -105,25 +103,23 @@ public class SellerUploadServlet extends HttpServlet
 					else if (name.equals("selleremail"))
 					{
 						selleremail =  (String) item.getString();
-						System.out.println("selleremail "+itemid);
+						System.out.println("selleremail "+selleremail);
 						
 					}
 
-					else if (name.equals("catname1"))
+					else if (name.equals("catId"))
 					{
-						catname1 =  (String) item.getString();
-						System.out.println("catname1"+itemid);
+						catid =  Integer.parseInt(item.getString());
+						System.out.println("catid: "+catid);
 						
 					}
 
-					else if (name.equals("subcatname1"))
-					{
-						subcatname1 =  (String) item.getString();
-						System.out.println("subcatname1 "+itemid);
-						
-					}
+//					else if (name.equals("subcatId"))
+//					{
+//						subcatid =  Integer.parseInt(item.getString());
+//						
+//					}
 
-					
 					else if (name.equals("brand"))
 					{
 						brand = (String) item.getString();
@@ -204,7 +200,7 @@ public class SellerUploadServlet extends HttpServlet
 		{
 			e.printStackTrace();
 		}
-		String splid = selleremail+catname1+subcatname1+itemid;
+		String splid = selleremail+catid+sub_cat_content+itemid;
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(BASE_URI+PATH_NAME);
 		FlopkartListing item = new FlopkartListing();

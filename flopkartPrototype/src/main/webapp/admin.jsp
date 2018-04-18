@@ -132,7 +132,7 @@
 								    	<tr>
 								    		<th>User Name</th>
 								    		<th>UserId (Email)</th>
-								    		<th>Encoded Password</th>
+								    		<th>Password</th>
 										</tr>
 								    	</thead>
 								    	<tbody id="userTable_body">
@@ -178,7 +178,7 @@
 								    	<tr>
 								    		<th>Seller Name</th>
 								    		<th>SellerId (Email)</th>
-								    		<th>Encoded Password</th>
+								    		<th>Password</th>
 										</tr>
 								    	</thead>
 								    	<tbody id="sellerTable_body">
@@ -240,7 +240,7 @@ function fetchUsers()
             {
             	var data =  "<tr><td>"+users_json[i].firstName+" "+users_json[i].lastName+"</td>"+
 				"<td>"+users_json[i].email+"</td>"+
-				"<td>"+users_json[i].password+"</td>"+
+				"<td>"+users_json[i].secret+"</td>"+
             				"</tr>";
             	if(users_json[i].userType==="seller")
             		$("#sellerTable_body").append(data);

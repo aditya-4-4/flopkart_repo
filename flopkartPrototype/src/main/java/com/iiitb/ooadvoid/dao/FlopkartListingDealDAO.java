@@ -50,6 +50,12 @@ public class FlopkartListingDealDAO extends HibernateDAO<FlopkartListingDeal>
 		return listingdeals;
 	}
 	
+	public List<FlopkartListingDeal> getFlopkartListingDealsByComboId(String comboId)
+	{
+		List<FlopkartListingDeal> listingdeals =  super.findAll(entity_name, "comboid", comboId);
+		return listingdeals;
+	}
+	
 	public List<FlopkartListingDeal> getFlopkartListingDealsByDealId(int dealId)
 	{
 		List<FlopkartListingDeal> listingdeals =  super.findAll(entity_name, "dealid", dealId);

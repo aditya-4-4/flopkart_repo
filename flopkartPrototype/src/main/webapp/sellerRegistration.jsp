@@ -262,37 +262,39 @@ function signup(ctxPath) {
 		url : ctxPath + "/webapi/users/create",
 		dataType : "json", // data type of response
 		data : signupformToJSON(),
-		success : renderDetails(fname,ctxPath),
-		error : function(){
-			//swal("NOOOO");
+		success : function(){
+			swal({
+				  title: "Success",
+				  text: "Seller successfully registered!",
+				  icon: "success"
+				})
+				.then((redirect) => {
+				  if (redirect) {
+					  window.location.href = "sellerHub.jsp";
+				  }
+				  else {
+					  window.location.href = "sellerHub.jsp";
+				  }
+				});
+		},
+		error : function(err){
+			if(err.status == 200){
+				swal({
+					  title: "Success",
+					  text: "Seller successfully registered!",
+					  icon: "success"
+					})
+					.then((redirect) => {
+					  if (redirect) {
+						  window.location.href = "sellerHub.jsp";
+					  }
+					  else {
+						  window.location.href = "sellerHub.jsp";
+					  }
+					});
+			}
 		}
 	});
-}
-
-function renderDetails(fname,ctxpath){
-	console.log("Successfully registered seller");
-	//console.log(fname);
-	var ctxPath = "<%=request.getContextPath()%>";
-	
-	console.log(ctxPath);
-	var path = ctxPath + "/webapi/users/getfirstname/"+fname;
-	console.log(path);
-	$.ajax({
-			type:'GET',
-			contentType:'application/json',
-			url: path,//+fname,
-			datatype:"json",
-			success: function(response) {
-						console.log(response.firstName);
-					},
-			error: function() {
-					console.log("err in renderDeails");
-					}
-	});
-
-	setTimeout(function(){
-		window.location.href="sellerHub.jsp";
-	}, 2000);
 }
 </script>
 </html>

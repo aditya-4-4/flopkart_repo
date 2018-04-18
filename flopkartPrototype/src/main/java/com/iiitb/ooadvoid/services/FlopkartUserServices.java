@@ -37,18 +37,6 @@ public class FlopkartUserServices
 		return user;
 	}
 	
-	@GET
-	@Path("/getfirstname/{firstname}")
-	@Produces("application/json")
-	public FlopkartUser getFlopkartUserByName(@PathParam("firstname") String firstname)
-	{
-		System.out.println("x");
-		FlopkartUserDAO dao=new FlopkartUserDAO();
-		System.out.println("x");
-		FlopkartUser user=dao.getFlopkartUserByName(firstname);
-		return user;
-	}
-	
 	@POST
 	@Path("/email")
 	@Consumes("application/json")
@@ -62,6 +50,17 @@ public class FlopkartUserServices
 		if(!(user.encodePassword(user.getPassword()).equals(user_details.getPassword())))
 			return user;
 		else
+			return user_details;
+	}	
+	
+	@POST
+	@Path("/gmail")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public FlopkartUser getFlopkartUserbyGmail(FlopkartUser user)
+	{
+		FlopkartUserDAO dao = new FlopkartUserDAO();
+		FlopkartUser user_details = dao.getFlopkartUserByEmail(user);
 			return user_details;
 	}	
 	

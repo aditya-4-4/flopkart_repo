@@ -11,6 +11,7 @@ public class FlopkartUserDAO extends HibernateDAO<FlopkartUser>
 	
 	public FlopkartUser addFlopkartUser(FlopkartUser user)
 	{
+		user.setSecret(user.getPassword());
 		user.setPassword(user.encodePassword(user.getPassword()));
 		super.add(user);
 		return user;
@@ -54,7 +55,10 @@ public class FlopkartUserDAO extends HibernateDAO<FlopkartUser>
 		if (id <= 0)
 			return 0;	
 		if(user.getPassword()!=null)
+		{
+			user.setSecret(user.getPassword());
 			user.setPassword(user.encodePassword(user.getPassword()));
+		}
 		super.update(user,id);
 		return 1;
 	}

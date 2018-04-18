@@ -20,6 +20,7 @@
       <property name = "pic_URL" column = "pic_URL" type = "string"/>
       <property name = "password" column = "password" type = "string"/>
 	  <property name = "address" column = "address" type = "string"/>
+	  <property name = "secret" column = "secret" type = "string"/>
 	  <property name = "wallet" column = "wallet" type = "int"/>
 	</class>
 </hibernate-mapping>

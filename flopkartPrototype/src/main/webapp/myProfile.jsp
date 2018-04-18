@@ -528,6 +528,10 @@ function diplayUser(user)
 function logout()
 {
 	deleteCookie("user_details");
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
 }
 
 $('#dpImg').change(function()
@@ -560,12 +564,13 @@ function changeinfo(ctxPath)
 		data : updateJSON(),
 		success : function()
 		{
-			deleteCookie("user_details");
+			swal("Updated!")
+			logout();
 			
 		},
 		error : function()
 				{
-			deleteCookie("user_details");	
+			logout();
 					}
 		});
 }

@@ -147,6 +147,7 @@ function checkCookie()
            					"</div>"+
            				"</div>"+
            		    		"<div class='col-sm-8'style ='font-size:15px; text-align:left; padding-top: 70px ; padding-left:60px;' >"+
+           		    			"<div style = 'font-size:15px;'>Item ID :  "+result.itemId+"</div>"+
            		    			"<div style = 'font-size:15px;'>Item Name :  "+result.listingName+"</div>"+
            		    			"<div style = 'font-size:15px; text-align:left; font-family:verdana;display:inline-block;margin-right:10px;color:green'>Discount :  "+
            		    				result.discount+"% off"+

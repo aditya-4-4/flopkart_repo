@@ -31,7 +31,7 @@ public class FlopkartUser
 
 	public Integer getWallet()
 	{
-		return wallet;
+		return (this.wallet == null) ? 0 : wallet;
 	}
 
 	public void setWallet(Integer wallet)

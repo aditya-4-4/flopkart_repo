@@ -245,7 +245,8 @@ function signupformToJSON()
 				"phone":phone,
         		"email":email,
         		"password":password,
-        		"userType":userType
+        		"userType":userType,
+        		"wallet":0
     });
 	return flipkart_user;
 }
@@ -359,7 +360,8 @@ function renderDetailsGoogle(user,profile)
 		"lastName":lastName,
   		"email":profile.getEmail(),
   		"password":"password",
-  		"userType":"customer"
+  		"userType":"customer",
+		"wallet":0
   });
 	
 	if (user == null)

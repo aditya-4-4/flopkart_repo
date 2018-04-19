@@ -552,23 +552,16 @@ function insertOrders()
 		}
 		else
 		{     
-				$('#order_table > tbody > tr').each(function(i,row) 
-					{
-		
-						var rowid = row.id;
-					        if(rowid!="")
-					       	{
-					    		var listingid = $("#listingid"+rowid).val();
-					    		var new_quant = $("#new_quant"+rowid).val();
-					    		insertOrder(listingid,new_quant,parseInt(rowid));
-					        	
-					        }
-					 });
+			hideOrder();
+			showPayment();
+			$("#confirmOrder").prop('disabled', true);
+			$("#arrow_order").show();
+			$("#orderStatus").show();
 		}
 	}
 }
 
-function insertOrder(listingid,new_quant,rowid)
+function insertOrder(status,rowid)
 {
 	var ctxPath = "<%=request.getContextPath()%>";
 	$.ajax(
@@ -576,14 +569,9 @@ function insertOrder(listingid,new_quant,rowid)
 			type : 'POST',
 			contentType : 'application/json',
 			url : ctxPath + "/webapi/orders/create",
-			data : order_formToJSON(rowid),
+			data : order_formToJSON(status,rowid),
 			success : function(data) 
 			{
-				hideOrder();
-				showPayment();
-				$("#confirmOrder").prop('disabled', true);
-				$("#arrow_order").show();
-				$("#orderStatus").show();
 			},
 			error: function(err) 
 			{
@@ -593,7 +581,7 @@ function insertOrder(listingid,new_quant,rowid)
 }
 
 
-function order_formToJSON(rowid) 
+function order_formToJSON(status,rowid) 
 {
 	//alert( $("#itemid"+rowid).val());
 	var shipAddress = $("#shipAddress").val().trim();	
@@ -619,7 +607,7 @@ function order_formToJSON(rowid)
 	    "shippingAddress" : fname +" " + lname + " , "+shipAddress,
 	    "userId" : userid,
 	    "quantity": $("#quant"+rowid).text(),
-	    "status" : "Ordered",
+	    "status" : status,
 	    "totalAmount" : TotalAmount  
 	});
 	//swal(flopkartOrder);
@@ -703,6 +691,7 @@ function proceedToPay()
 											$("#accWarning").show();
 											$("#arrow").show();
 											$("#paymentStatus").show();
+											$("#proceed").prop('disabled', true);
 										      
 											$('#order_table > tbody > tr').each(function(i,row) 
 												{
@@ -711,7 +700,7 @@ function proceedToPay()
 												       	{
 												    		var listingid = $("#listingid"+rowid).val();
 												    		var new_quant = $("#new_quant"+rowid).val();
-											 				updateOrder("Failed",parseInt(rowid));
+											 				insertOrder("Failed",parseInt(rowid));
 												        }
 												 });
 									}
@@ -761,7 +750,7 @@ function deductBalance(amt,id)
 					       	{
 					    		var listingid = $("#listingid"+rowid).val();
 					    		var new_quant = $("#new_quant"+rowid).val();
-				 				updateOrder("Money Paid",parseInt(rowid));
+				 				insertOrder("Money Paid",parseInt(rowid));
 								updateQuant(listingid,new_quant);
 					        }
 					 });
@@ -813,42 +802,6 @@ function addBalanceFlopkart(amt)
 		});
 }
 
-function updateOrder(status,rowid)
-{
-	var ctxPath = "<%=request.getContextPath()%>";
-	var orderid = <%=orderid%> + rowid;
-	$.ajax(
-		{
-			type : 'GET',
-			contentType : 'application/json',
-			url : ctxPath + "/webapi/orders/order/"+orderid,
-			success : function(data)
-			{
-				//swal(data[0].itemId);
-				$.ajax(
-						{
-							type : 'PUT',
-							contentType : 'application/json',
-							url : ctxPath + "/webapi/orders/update/"+data[0].id,
-							data : JSON.stringify({
-								"status": status
-							}),
-							success : function(data)
-							{
-								
-							},
-							error: function(err) 
-							{
-								swal(JSON.stringify(err));
-							}
-					});
-			},
-			error: function(err) 
-			{
-				swal(JSON.stringify(err));
-			}
-	});
-}
 
 function checklogin(){
 	var user = getCookie("user_details");

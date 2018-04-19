@@ -442,7 +442,10 @@ $("#quant-up").click(function(){
 		value++;
 		$("#quantity").val(value);
 		$("#quant").val(value);
-		
+	}
+	else {
+		$("#quantwarning").text("Only "+available_quant+" items are available in stock");
+		$("#quantwarning").show();
 	}
 });
 
@@ -503,7 +506,10 @@ function getDealName(ctxPath){
 			url : ctxPath + "/webapi/deals/"+dealid,
 			dataType : "json", // data type of response
 			success : function(deal){
-				$("#dealname").html("SUPER DEAL: "+deal.dealname+"!"+"&nbsp; &nbsp; <a class='btn btn-primary' href='offerZoneDeal.jsp?id="+dealid+"'> Avail Deal </a>");
+				$("#dealname").html("SUPER DEAL: "+deal.dealname+"!"+"&nbsp; &nbsp;");
+				if(deal.dealname != "15% Cashback" || deal.dealname != "50% off"){
+					$("#dealname").append("<a class='btn btn-primary' href='offerZoneDeal.jsp?id="+dealid+"'> Avail Deal </a>");
+				}
 			},
 			error: function(){
 				//alert("error occurred"); 

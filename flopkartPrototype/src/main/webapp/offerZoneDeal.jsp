@@ -362,7 +362,7 @@ function fetchDeals(ctxPath)
 				var data = "";
 				for(var i in deals)
 				{
-					if(deals[i].dealname === "50% off" || deals[i].dealname === "15% cashback")
+					if(deals[i].dealname === "50% off" || deals[i].dealname === "15% Cashback")
 						continue;
 					data += "<li><a href='offerZoneDeal.jsp?id="+deals[i].id+"'>"
 							+deals[i].dealname+"</a></li>";

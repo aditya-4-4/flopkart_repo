@@ -176,7 +176,11 @@ function quantdown(i){
 //if total cart amount is more than 1000, delivery charge becomes 0
 function textChange(){
     var value = $("#totalPrice").text();
-    if(parseInt(value)>=1000) {
+    if(parseInt(value)==0){
+    	$("#cartBody").hide();
+    	$("#emptyCart").show();
+    }
+    else if(parseInt(value)>=1000) {
     	$("#deliveryCharges").text("0");
     }
     else if(parseInt(value)<1000) {
@@ -331,6 +335,10 @@ function deleteRow(r, i) {
 		  if (willDelete) {
 			var rowno = r.parentNode.parentNode.rowIndex;
 			var id = document.getElementById("cartId"+i).value;
+			var price = parseInt(document.getElementById("price"+i).innerHTML);
+			var actualprice = parseInt(document.getElementById("originalPrice"+i).innerHTML);
+			var totalprice = parseInt($("#totalPrice").text());
+			var actualtotal = parseInt($("#actualcarttotal").val()); 
 			document.getElementById("myTable").deleteRow(rowno);
 			$.ajax(
 					{
@@ -345,6 +353,14 @@ function deleteRow(r, i) {
 							num--;
 							$("#noOfItems").val(num);
 							$("#cartQuant").text("MY CART ("+num+")");
+							totalprice -= price;
+							actualtotal -= actualprice;
+							var savings = actualtotal - totalprice;
+							$("#totalPrice").text(totalprice);
+							$("#actualcarttotal").val(actualtotal);
+							textChange();
+							$("#amount-payable").text(parseInt($("#totalPrice").text())+parseInt($("#deliveryCharges").text()));
+							$("#savings").text(savings);
 						},
 						error : function(){
 							swal("Could not remove from cart");

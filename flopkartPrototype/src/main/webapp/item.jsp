@@ -507,7 +507,9 @@ function getDealName(ctxPath){
 			dataType : "json", // data type of response
 			success : function(deal){
 				$("#dealname").html("SUPER DEAL: "+deal.dealname+"!"+"&nbsp; &nbsp;");
-				if(deal.dealname != "15% Cashback" || deal.dealname != "50% off"){
+				if(deal.dealname == "15% Cashback" || deal.dealname == "50% off"){
+				}
+				else {
 					$("#dealname").append("<a class='btn btn-primary' href='offerZoneDeal.jsp?id="+dealid+"'> Avail Deal </a>");
 				}
 			},
